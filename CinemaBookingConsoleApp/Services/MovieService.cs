@@ -18,6 +18,7 @@ namespace CinemaBookingConsoleApp.Services
 
         public void GetMoviesList()
         {
+            Console.WriteLine();
             var movies = _context.Movies.ToList();
             foreach (Movie movie in movies)
             {
@@ -27,6 +28,7 @@ namespace CinemaBookingConsoleApp.Services
 
         public bool DetailSelected(int No)
         {
+            Console.WriteLine();
             var movie = _context.Movies.FirstOrDefault(x => x.Id == No);
             if (movie != null) 
             {
@@ -41,6 +43,16 @@ namespace CinemaBookingConsoleApp.Services
             {
                 Console.WriteLine("There is no such Movie No.");
                 return false;
+            }
+        }
+
+        public void GetShowTimes(int movieId)
+        {
+            Console.WriteLine();
+            List<Showtime> showtimes = _context.Showtimes.Where(x => x.MovieId == movieId).ToList();
+            foreach(Showtime showtime in showtimes)
+            {
+                Console.WriteLine($"showtime : {showtime.Time}");
             }
         }
     }
