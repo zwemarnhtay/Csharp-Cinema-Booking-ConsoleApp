@@ -15,7 +15,7 @@ namespace CinemaBookingConsoleApp.Models
         public int MovieId { get; set; }
         [Column("Showtime")]
         public DateTime Time { get; set; }
-
+        //public SeatDTO Seats { get; set; }
     }
 }
  

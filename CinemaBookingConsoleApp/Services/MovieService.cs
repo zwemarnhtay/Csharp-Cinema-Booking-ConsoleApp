@@ -1,4 +1,5 @@
 ﻿using CinemaBookingConsoleApp.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +47,44 @@ namespace CinemaBookingConsoleApp.Services
             }
         }
 
-        public void GetShowTimes(int movieId)
+        public int GetShowTimes(int movieId)
         {
             Console.WriteLine();
             List<Showtime> showtimes = _context.Showtimes.Where(x => x.MovieId == movieId).ToList();
+
+            int counter = 1;
+            int[,] dir = new int[showtimes.Count,2];
+
             foreach(Showtime showtime in showtimes)
             {
-                Console.WriteLine($"showtime : {showtime.Time}");
+                dir[counter - 1, 0] = counter;
+                dir[counter - 1, 1] = showtime.Id;
+                Console.WriteLine($"{counter} showtime : {showtime.Time}");
+                counter++;
+            }
+
+            Console.Write("choose showtime :");
+            int num = int.Parse(Console.ReadLine());
+
+            int showtimeId = -1;
+            for (int i = 0; i < dir.GetLength(0); i++)
+            {
+                if (dir[i,0] == num)
+                {
+                    showtimeId = dir[i,1]; break;
+                }
+            }
+            return showtimeId;
+        }
+
+        public void GetSeats()
+        {
+            SeatDTO data = new SeatDTO();
+            
+            foreach (Seat seat in data.Seats)
+            {
+               
+                Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
             }
         }
     }

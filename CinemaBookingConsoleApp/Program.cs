@@ -1,9 +1,12 @@
 ﻿using CinemaBookingConsoleApp.Services;
 
 var Movie = new MovieService();
+var Booking = new BookingService();
 
 while (true)
 {
+   // Movie.GetSeats();
+
     Console.WriteLine("\n --WELCOME TO AMENIC--");
     Console.WriteLine("1 - Show avaliable movies list");
     Console.WriteLine("2 - Exit");
@@ -24,12 +27,23 @@ while (true)
             isExist = Movie.DetailSelected(movieNo);
         } while (isExist == false);
 
-        Console.WriteLine("\n Do you want to see showtimes? (yes/no)");
+        Console.Write("\n Do you want to see showtimes? (yes/no) :");
         string YN = Console.ReadLine().Trim().ToLower();
 
         if(YN == "yes" || YN == "y")
         {
-            Movie.GetShowTimes(movieNo);
+            int showtimeId =Movie.GetShowTimes(movieNo);
+
+            Console.Write("\n Do you want to check avaliable seats? (yes/no) :");
+            YN = Console.ReadLine().Trim().ToLower();
+            if(YN != "yes" || YN != "y")
+            {
+                Movie.GetSeats();
+
+                Console.Write("\n Enter seat No. :");
+                string seatNo = Console.ReadLine();
+                Booking.bookTicket(movieNo,showtimeId, seatNo);
+            }
         }
         else if(YN == "no" || YN == "n")
         {

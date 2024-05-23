@@ -17,5 +17,6 @@ namespace CinemaBookingConsoleApp
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Showtime> Showtimes { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 }
