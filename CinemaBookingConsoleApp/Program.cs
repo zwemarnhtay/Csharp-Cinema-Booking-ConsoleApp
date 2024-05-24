@@ -42,10 +42,9 @@ while (true)
 
             if(YN != "yes" || YN != "y")
             {
-                Seat.GetAvaliableSeats(showtimeId);
+                string seatNo = Seat.GetAvaliableSeats(showtimeId);
 
-                Console.Write("\n Enter seat No. :");
-                string seatNo = Console.ReadLine();
+                Console.Write($"\n seat No. : {seatNo}");
                 Booking.bookTicket(movieNo,showtimeId, seatNo);
             }
         }

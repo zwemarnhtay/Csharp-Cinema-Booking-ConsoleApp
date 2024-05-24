@@ -17,27 +17,93 @@ namespace CinemaBookingConsoleApp.Services
             _context = new DBContext();
         }
 
-        public void GetAvaliableSeats(int showtimeId)
+        public string GetAvaliableSeats(int showtimeId)
         {
+            string strRow = string.Empty;
+            string strCol = string.Empty;
             SeatDTO data = new SeatDTO();
 
             List<Booking> bookings = _context.Bookings.Where(x => x.ShowtimeId == showtimeId).ToList();
 
-            foreach (Seat seat in data.Seats)
+            if(data.Seats.Count() > 10)
             {
-                if (bookings.Any())
+                List<string> uniqueRows = new List<string>();
+                foreach (Seat seat in data.Seats)
                 {
-                    foreach (Booking booking in bookings)
+                    string row = seat.Row.ToString();
+                    if (!uniqueRows.Contains(row))
                     {
-                        if (booking.SeatNo != $"{seat.Row}{seat.No}")
+                        uniqueRows.Add(row);
+                    }
+                }
+
+                Console.Write("Row No : ");
+                foreach (string row in uniqueRows)
+                {
+                    if (bookings.Any())
+                    {
+                        foreach(Booking booking in bookings)
                         {
-                            Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
+                            if (!booking.SeatNo[0].Equals(row))
+                            {
+                                Console.Write($"{row} ");
+                            }
                         }
                     }
-                    break;
+                    else
+                    {
+                        Console.Write($"{row} ");
+                    }
                 }
-                Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
+                Console.Write("\n Enter Row No. :");
+                strRow = Console.ReadLine().Trim().ToUpper();
+
+                Console.Write("\n Column No : ");
+                foreach (Seat seat in data.Seats)
+                {
+                    if (seat.Row.ToString() == strRow)
+                    {
+                        if (bookings.Any())
+                        {
+                            string seatNo = String.Concat(seat.Row, seat.No);
+                            bool isExist = bookings.Any(b => b.SeatNo.Equals(seatNo));
+                            if (!isExist)
+                            {
+                                Console.Write($"{seat.No} ");
+                            }
+                        }
+                        else
+                        {
+                            Console.Write($"{seat.No} ");
+                        }
+                    }
+                }
+                Console.Write("\n Enter column No :");
+                strCol = Console.ReadLine();
             }
+            else
+            {
+                foreach (Seat seat in data.Seats)
+                {
+                    if (bookings.Any())
+                    {
+                        foreach (Booking booking in bookings)
+                        {
+                            string seatNo = String.Concat(seat.Row, seat.No);
+                            if (!booking.SeatNo.Equals(seatNo))
+                            {
+                                Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
+                    }
+                }
+            }
+            string No = String.Concat(strRow, strCol);
+            return No;
         }
     }
 }
