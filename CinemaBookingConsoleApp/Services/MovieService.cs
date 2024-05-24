@@ -64,7 +64,11 @@ namespace CinemaBookingConsoleApp.Services
             }
 
             Console.Write("choose showtime :");
-            int num = int.Parse(Console.ReadLine());
+            //int num = int.Parse(Console.ReadLine());
+
+            if(!int.TryParse(Console.ReadLine(), out int num)){
+                Console.WriteLine("Invalid input, enter yes or no!"); 
+            }
 
             int showtimeId = -1;
             for (int i = 0; i < dir.GetLength(0); i++)
@@ -75,17 +79,6 @@ namespace CinemaBookingConsoleApp.Services
                 }
             }
             return showtimeId;
-        }
-
-        public void GetSeats()
-        {
-            SeatDTO data = new SeatDTO();
-            
-            foreach (Seat seat in data.Seats)
-            {
-               
-                Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
-            }
         }
     }
 }
