@@ -17,14 +17,37 @@ namespace CinemaBookingConsoleApp.Services
             _context = new DBContext();
         }
 
-        public void GetMoviesList()
+        public int GetMoviesList()
         {
-            Console.WriteLine();
             var movies = _context.Movies.ToList();
+
+            int movieId = -1;
+
+            int[,] dir = new int[movies.Count, 2];
+            int counter = 1;
             foreach (Movie movie in movies)
             {
-                Console.WriteLine($"\t {movie.Id} - {movie.Title}");
+                dir[counter - 1, 0] = counter;
+                dir[counter - 1, 1] = movie.Id;
+                Console.WriteLine($"\n \t {counter} - {movie.Title}");
+                counter++;
             }
+
+            Console.Write("choose showtime :");
+
+            if (!int.TryParse(Console.ReadLine(), out int num))
+            {
+                Console.Write("Invalid input, enter number : ");
+            }
+
+            for (int i = 0; i < dir.GetLength(0); i++)
+            {
+                if (dir[i, 0] == num)
+                {
+                    movieId = dir[i, 1]; break;
+                }
+            }
+            return movieId;
         }
 
         public bool DetailSelected(int No)

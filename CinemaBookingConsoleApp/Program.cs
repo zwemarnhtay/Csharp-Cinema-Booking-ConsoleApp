@@ -19,17 +19,11 @@ while (true)
 
     if (choice == 1)
     {
-        Movie.GetMoviesList();
-
         int movieNo;
         bool isExist;
         string YN;
-        do
-        {
-            Console.Write("Enter Movie No. :");
-            movieNo = int.Parse(Console.ReadLine());
-            isExist = Movie.DetailSelected(movieNo);
-        } while (isExist == false);
+
+        movieNo = Movie.GetMoviesList();
 
         Console.Write("\n Do you want to see showtimes? (yes/no) :");
         YN = Console.ReadLine().Trim().ToLower();

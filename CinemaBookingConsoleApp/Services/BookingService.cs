@@ -1,4 +1,5 @@
 ﻿using CinemaBookingConsoleApp.Models;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,14 @@ namespace CinemaBookingConsoleApp.Services
             Console.WriteLine($"movieNo. : {movieId}");
             Console.WriteLine($"Showtime : {showtime.Time}");
             Console.WriteLine($"SeatNo.  : {seatNo}");
-            Console.Write("Customer Name :");
 
-            string bookedBy = Console.ReadLine();
+            string bookedBy = string.Empty;
+
+            do
+            {
+                Console.Write("Customer Name :");
+                bookedBy = Console.ReadLine().Trim();
+            }while(bookedBy.IsNullOrEmpty());
 
             Booking booking = new Booking()
             {
