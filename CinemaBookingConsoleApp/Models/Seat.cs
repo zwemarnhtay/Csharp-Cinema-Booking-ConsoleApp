@@ -9,7 +9,6 @@ namespace CinemaBookingConsoleApp
     
     public class SeatDTO
     {
-        public int ShowTimeId { get; set; } 
         public Seat[] Seats { get; set; }
 
         public SeatDTO()
