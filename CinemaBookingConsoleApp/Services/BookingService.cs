@@ -41,7 +41,9 @@ namespace CinemaBookingConsoleApp.Services
             int result = _context.SaveChanges();
 
             string msg = result > 0 ? "booking success" : "failed";
-            Console.WriteLine(msg);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n \t {msg} \n");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

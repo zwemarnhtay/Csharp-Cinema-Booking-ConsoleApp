@@ -6,9 +6,10 @@ BookingService Booking = new BookingService();
 
 while (true)
 {
+    Console.Title = "Cinema_Booking";
     Console.WriteLine("\n --WELCOME TO AMENIC--");
-    Console.WriteLine("1 - Show avaliable movies list");
-    Console.WriteLine("2 - Exit");
+    Console.WriteLine("\t 1 - Show avaliable movies list");
+    Console.WriteLine("\t 2 - Exit");
     Console.Write("Your choice :");
 
     if(!int.TryParse(Console.ReadLine(), out int choice))
@@ -37,15 +38,24 @@ while (true)
         {
             int showtimeId = Movie.GetShowTimes(movieNo);
 
-            Console.Write("\n Do you want to check avaliable seats? (yes/no) :");
-            YN = Console.ReadLine().Trim().ToLower();
-
-            if(YN != "yes" || YN != "y")
+            if(showtimeId != -1)
             {
-                string seatNo = Seat.GetAvaliableSeats(showtimeId);
+                Console.Write("\n Do you want to check avaliable seats? (yes/no) :");
+                YN = Console.ReadLine().Trim().ToLower();
 
-                Console.Write($"\n seat No. : {seatNo}");
-                Booking.bookTicket(movieNo,showtimeId, seatNo);
+                if (YN == "yes" || YN == "y")
+                {
+                    string seatNo = Seat.GetAvaliableSeats(showtimeId);
+
+                    Console.Write($"\n seat No. : {seatNo}");
+                    Booking.bookTicket(movieNo, showtimeId, seatNo);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("There are no avaliable seats");
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
         else if(YN == "no" || YN == "n")
@@ -54,13 +64,16 @@ while (true)
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n invalid input!");
+            Console.ForegroundColor = ConsoleColor.White;
         }
-
     }
     else if (choice == 2)
     {
-        Console.WriteLine("Thank you for your time!");
+        Console.ForegroundColor= ConsoleColor.Green;
+        Console.WriteLine("\n \t Thank you for your time! \n");
+        Console.ForegroundColor = ConsoleColor.White;
         break;
     }
 }

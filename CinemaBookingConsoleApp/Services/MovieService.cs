@@ -23,7 +23,7 @@ namespace CinemaBookingConsoleApp.Services
             var movies = _context.Movies.ToList();
             foreach (Movie movie in movies)
             {
-                Console.WriteLine($"{movie.Id} - {movie.Title}");
+                Console.WriteLine($"\t {movie.Id} - {movie.Title}");
             }
         }
 
@@ -55,27 +55,31 @@ namespace CinemaBookingConsoleApp.Services
             int counter = 1;
             int[,] dir = new int[showtimes.Count,2];
 
-            foreach(Showtime showtime in showtimes)
-            {
-                dir[counter - 1, 0] = counter;
-                dir[counter - 1, 1] = showtime.Id;
-                Console.WriteLine($"{counter} showtime : {showtime.Time}");
-                counter++;
-            }
-
-            Console.Write("choose showtime :");
-            //int num = int.Parse(Console.ReadLine());
-
-            if(!int.TryParse(Console.ReadLine(), out int num)){
-                Console.WriteLine("Invalid input, enter yes or no!"); 
-            }
-
             int showtimeId = -1;
-            for (int i = 0; i < dir.GetLength(0); i++)
+
+            if (showtimes.Any())
             {
-                if (dir[i,0] == num)
+                foreach (Showtime showtime in showtimes)
                 {
-                    showtimeId = dir[i,1]; break;
+                    dir[counter - 1, 0] = counter;
+                    dir[counter - 1, 1] = showtime.Id;
+                    Console.WriteLine($"{counter} showtime : {showtime.Time}");
+                    counter++;
+                }
+
+                Console.Write("choose showtime :");
+
+                if (!int.TryParse(Console.ReadLine(), out int num))
+                {
+                    Console.Write("Invalid input, enter number : ");
+                }
+
+                for (int i = 0; i < dir.GetLength(0); i++)
+                {
+                    if (dir[i, 0] == num)
+                    {
+                        showtimeId = dir[i, 1]; break;
+                    }
                 }
             }
             return showtimeId;

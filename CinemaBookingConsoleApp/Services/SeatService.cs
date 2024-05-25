@@ -25,6 +25,8 @@ namespace CinemaBookingConsoleApp.Services
 
             List<Booking> bookings = _context.Bookings.Where(x => x.ShowtimeId == showtimeId).ToList();
 
+            string No = string.Empty;
+
             if(data.Seats.Count() > 10)
             {
                 List<string> uniqueRows = new List<string>();
@@ -42,12 +44,10 @@ namespace CinemaBookingConsoleApp.Services
                 {
                     if (bookings.Any())
                     {
-                        foreach(Booking booking in bookings)
+                        bool isExist = bookings.Any(b => b.SeatNo[0].Equals(row));
+                        if (!isExist)
                         {
-                            if (!booking.SeatNo[0].Equals(row))
-                            {
-                                Console.Write($"{row} ");
-                            }
+                            Console.Write($"{row} ");
                         }
                     }
                     else
@@ -80,6 +80,8 @@ namespace CinemaBookingConsoleApp.Services
                 }
                 Console.Write("\n Enter column No :");
                 strCol = Console.ReadLine();
+
+                No = String.Concat(strRow, strCol);
             }
             else
             {
@@ -101,8 +103,9 @@ namespace CinemaBookingConsoleApp.Services
                         Console.WriteLine($"SeatNo : {seat.Row}{seat.No}");
                     }
                 }
+                Console.Write("\n Enter seat No : ");
+                No = Console.ReadLine();
             }
-            string No = String.Concat(strRow, strCol);
             return No;
         }
     }
