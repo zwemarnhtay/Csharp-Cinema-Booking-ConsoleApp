@@ -33,7 +33,7 @@ namespace CinemaBookingConsoleApp.Services
                 counter++;
             }
 
-            Console.Write("choose showtime :");
+            Console.Write("choose movie No :");
 
             if (!int.TryParse(Console.ReadLine(), out int num))
             {
